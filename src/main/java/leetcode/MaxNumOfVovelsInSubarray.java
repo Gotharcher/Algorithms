@@ -24,6 +24,7 @@ public class MaxNumOfVovelsInSubarray {
 
     public int maxVovels(String s, int k){
         Set<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
-        return 0;
+        int maxVowels = 0;
+        return maxVowels;
     }
 }
