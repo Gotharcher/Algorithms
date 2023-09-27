@@ -1,4 +1,4 @@
-package Yandex;
+package Yandex.Contests.Example;
 
 //Лей, лей, не жалей
 
