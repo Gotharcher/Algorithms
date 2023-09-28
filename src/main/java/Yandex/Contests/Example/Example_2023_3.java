@@ -1,4 +1,4 @@
-package Yandex;
+package Yandex.Contests.Example;
 //Приснится же такое...
 
 import java.io.BufferedReader;

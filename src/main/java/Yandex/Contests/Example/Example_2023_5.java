@@ -1,4 +1,4 @@
-package Yandex;
+package Yandex.Contests.Example;
 
 import java.io.BufferedReader;
 import java.io.IOException;

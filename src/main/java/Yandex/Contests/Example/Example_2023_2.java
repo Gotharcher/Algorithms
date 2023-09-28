@@ -1,4 +1,4 @@
-package Yandex;
+package Yandex.Contests.Example;
 //Через тернии к клиенту
 
 import java.io.BufferedReader;
