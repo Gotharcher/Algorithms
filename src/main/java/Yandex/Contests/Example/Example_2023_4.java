@@ -8,8 +8,8 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Example_2023_4 {
-    public static Map<Integer, Integer> pricesMap = new HashMap<>();
-    public static Map<Integer, Integer> lengthMap = new HashMap<>();
+    public static Map<Integer, Long> pricesMap = new HashMap<>();
+    public static Map<Integer, Long> lengthMap = new HashMap<>();
 
     public static StringBuilder sb = new StringBuilder();
 
@@ -20,8 +20,8 @@ public class Example_2023_4 {
             String[] orderData = br.readLine().split(" ");
             int startTime = Integer.parseInt(orderData[0]);
             int stopTime = Integer.parseInt(orderData[1]);
-            pricesMap.put(startTime, pricesMap.getOrDefault(startTime, 0) + Integer.parseInt(orderData[2]));
-            lengthMap.put(stopTime, lengthMap.getOrDefault(stopTime, 0) + stopTime-startTime);
+            pricesMap.put(startTime, pricesMap.getOrDefault(startTime, 0L) + Integer.parseInt(orderData[2]));
+            lengthMap.put(stopTime, lengthMap.getOrDefault(stopTime, 0L) + stopTime-startTime);
         }
         int questionsQty = Integer.parseInt(br.readLine());
         int[][] questionsArray= new int[questionsQty][3];
@@ -32,12 +32,12 @@ public class Example_2023_4 {
             int question = Integer.parseInt(questions[2]);
 
             if(question == 1) {
-                pricesMap.putIfAbsent(startTime-1, 0);
-                pricesMap.putIfAbsent(stopTime, 0);
+                pricesMap.putIfAbsent(startTime-1, 0L);
+                pricesMap.putIfAbsent(stopTime, 0L);
             }
             if(question == 2) {
-                lengthMap.putIfAbsent(startTime-1, 0);
-                lengthMap.putIfAbsent(stopTime, 0);
+                lengthMap.putIfAbsent(startTime-1, 0L);
+                lengthMap.putIfAbsent(stopTime, 0L);
             }
 
             questionsArray[i][0] = startTime;
@@ -54,7 +54,7 @@ public class Example_2023_4 {
         Map<Integer, Long>  rsqLengths = getPrefixesMap(listOfEnds, lengthMap);
 
         for(int k=0; k<questionsQty; k++){
-            long res = 0;
+            Long res = 0L;
             if(questionsArray[k][2] == 1){
                 res = countPrefSumm(rsqPrices, questionsArray[k][0] - 1, questionsArray[k][1]);
                 sb.append(res);
@@ -69,7 +69,7 @@ public class Example_2023_4 {
         System.out.println(sb);
     }
 
-    public static Map<Integer, Long> getPrefixesMap(List<Integer> initList, Map<Integer, Integer> sourceMap){
+    public static Map<Integer, Long> getPrefixesMap(List<Integer> initList, Map<Integer, Long> sourceMap){
         Map<Integer, Long> prefMap = new HashMap<>();
         prefMap.put(0, 0L);
         prefMap.put(initList.get(0), 0L);
@@ -79,7 +79,7 @@ public class Example_2023_4 {
         return prefMap;
     }
 
-    public static long countPrefSumm(Map<Integer, Long> prefMap, int startVal, int stopVal){
+    public static Long countPrefSumm(Map<Integer, Long> prefMap, int startVal, int stopVal){
         return prefMap.get(stopVal) - prefMap.get(startVal);
     }
 }
