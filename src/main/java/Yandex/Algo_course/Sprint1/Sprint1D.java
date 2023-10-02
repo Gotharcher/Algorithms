@@ -1,4 +1,4 @@
-package Yandex.Algo_course;
+package Yandex.Algo_course.Sprint1;
 
 //D. Хаотичность погоды
 
@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Sprint1D {
-
-
 
     public static void main(String[] ars) throws IOException {
         int ans = 0;
