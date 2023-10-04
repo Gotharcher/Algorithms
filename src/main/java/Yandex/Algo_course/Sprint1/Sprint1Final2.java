@@ -1,6 +1,6 @@
-package Yandex.Algo_course.Sprint1;
-
 //ID 92022876
+
+package Yandex.Algo_course.Sprint1;
 
 import java.io.BufferedReader;
 import java.io.IOException;
