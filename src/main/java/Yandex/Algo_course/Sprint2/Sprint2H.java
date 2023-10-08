@@ -13,20 +13,20 @@ public class Sprint2H {
         Stack<Character> bracketSeq = new Stack<>();
         try {
             for (char c : charSeq) {
-                if(c=='(' || c=='[' || c=='{'){
+                if (c == '(' || c == '[' || c == '{') {
                     bracketSeq.push(c);
                 }
-                if(c==')' || c==']' || c=='}') {
+                if (c == ')' || c == ']' || c == '}') {
                     Character stackChar = bracketSeq.pop();
-                    if(stackChar=='(' && c != ')'){
+                    if (stackChar == '(' && c != ')') {
                         System.out.println("False");
                         return;
                     }
-                    if(stackChar=='[' && c != ']'){
+                    if (stackChar == '[' && c != ']') {
                         System.out.println("False");
                         return;
                     }
-                    if(stackChar=='{' && c != '}'){
+                    if (stackChar == '{' && c != '}') {
                         System.out.println("False");
                         return;
                     }
@@ -36,9 +36,9 @@ public class Sprint2H {
             System.out.println("False");
             return;
         }
-        if(bracketSeq.isEmpty()) {
+        if (bracketSeq.isEmpty()) {
             System.out.println("True");
-        }else{
+        } else {
             System.out.println("False");
         }
     }
