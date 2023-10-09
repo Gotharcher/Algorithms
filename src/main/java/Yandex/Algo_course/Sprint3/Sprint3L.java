@@ -22,13 +22,13 @@ public class Sprint3L {
 //        int firstBike = binarySearch(prices, bikePrice,0, totalDays-1)+1;
 //        int secondBike = binarySearch(prices, bikePrice*2, 0, totalDays-1)+1;
 
-        int firstBike = recursionSearch(prices, bikePrice)+1;
-        int secondBike = recursionSearch(prices, bikePrice*2)+1;
+        int firstBike = recursionSearch(prices, bikePrice) + 1;
+        int secondBike = recursionSearch(prices, bikePrice * 2) + 1;
 
         System.out.println(firstBike + " " + secondBike);
     }
 
-    public static int builtInBinarySearch(int[] arr, int val){
+    public static int builtInBinarySearch(int[] arr, int val) {
         return Arrays.binarySearch(arr, val);
     }
 
@@ -39,7 +39,8 @@ public class Sprint3L {
             if (absVal > totalDays) {
                 return -2;
             } else {
-                buildFound = absVal-1;
+                buildFound = absVal - 1;
+                return buildFound;
             }
         }
         while (buildFound >= 0) {
