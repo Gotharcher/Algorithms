@@ -3,17 +3,17 @@ package Yandex.Algo_course.Sprint2;
 import java.io.*;
 
 public class Sprint2J {
-    public static LinkedQueue headLink, tailLink;
+    public static MyLinkedQueue headLink, tailLink;
     public static int eleQty = 0;
-//    public static BufferedWriter bw;
     public static PrintWriter pw;
     public static void main(String[] ars) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//        bw = new BufferedWriter(new OutputStreamWriter(System.out));
         pw = new PrintWriter(System.out);
         int commands = Integer.parseInt(br.readLine());
+        long tms = System.currentTimeMillis();
         for(int i=0; i<commands;i++){
             String[] command = br.readLine().split(" ");
+//            String[] command = new String[]{"put", "1000"};
             if("put".equals(command[0])){
                 lqPut(Integer.parseInt(command[1]));
             }
@@ -24,11 +24,11 @@ public class Sprint2J {
                 qSize();
             }
         }
-//        bw.close();
+//        pw.println("time spent: " + (System.currentTimeMillis() - tms));
         pw.close();
     }
     public static void lqPut(Integer i){
-        LinkedQueue newLink = new LinkedQueue(i);
+        MyLinkedQueue newLink = new MyLinkedQueue(i);
         eleQty++;
         if(headLink == null){
             headLink = newLink;
@@ -61,14 +61,14 @@ public class Sprint2J {
 
 }
 
-class LinkedQueue{
-    LinkedQueue nextLink;
+class MyLinkedQueue {
+    MyLinkedQueue nextLink;
     int val;
 
-    public LinkedQueue(int val){
+    public MyLinkedQueue(int val){
         this.val = val;
     }
-    public LinkedQueue(){
+    public MyLinkedQueue(){
 
     }
 }
