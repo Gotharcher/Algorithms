@@ -22,7 +22,7 @@ public class Sprint2J_Array {
                 listArray.add(0, Integer.parseInt(command[1]));
             }
             if("get".equals(command[0])){
-                if(listArray.size()==0){
+                if(listArray.isEmpty()){
                     pw.println("error");
                     continue;
                 }
