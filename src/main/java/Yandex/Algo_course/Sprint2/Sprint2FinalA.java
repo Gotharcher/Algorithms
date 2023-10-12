@@ -1,12 +1,14 @@
-//92777454
-//https://contest.yandex.ru/contest/22781/run-report/92777454/
+//92798984
+//https://contest.yandex.ru/contest/22781/run-report/92798984/
 
 //Как удобнее, посылку номером или ссылкой?
+
+package Yandex.Algo_course.Sprint2;
 
 /*
 -- ПРИНЦИП РАБОТЫ --
 По условиям задачи, необходимо реализовать дек на кольцевом буфере. Принцип работы дека схож с принципом работы кольцевой очереди:
-задается максимальный размер буфера, который представляет из себя массив заранее определенной длины, и два индекса-указателя, на начало и конец очереди.
+задается максимальный размер буфера, который представляет собой массив заранее определенной длины, и два индекса-указателя, на начало и конец очереди.
 При добавлении элемента, элементу массива с текущим индексом-указателем (не важно, с начала или конца) присваивается входное значение, индекс-указатель увеличивается на 1,
 общий счётчик элементов увеличивается на 1.
 При удалении элемента, индекс-указатель уменьшается на 1 и возвращается элемент индексу (аналогично, не важно, с начала или с конца,
@@ -29,10 +31,11 @@
 
 /*
 -- ВРЕМЕННАЯ СЛОЖНОСТЬ --
-Обращение к ячейке массива по индексу занимает константное время. Массив определяется один раз, при создании. Реаллокация массива не просходит.
+Обращение к ячейке массива по индексу занимает константное время. Массив определяется один раз, при создании. Реаллокация массива не происходит.
 Размер деки хранится в отдельном значении, проверка размера и заполненности деки -> константное значение.
 Сравнивающие и арифметические операции над переменными выполняются за константное время.
 Таким образом, временная сложность для работы с декой: записи, удаления - О(1).
+Полное время выполнения программы - О(N), где N - число входных команд. [дописал эту строку после формирования посылки]
  */
 
 /*
@@ -42,8 +45,6 @@
 Соответственно, пространственная сложность реализации 4+N => O(N)
  */
 
-
-package Yandex.Algo_course.Sprint2;
 
 //Дек на кольце
 
@@ -56,29 +57,36 @@ import java.util.StringTokenizer;
 
 public class Sprint2FinalA {
 
+    static final String PUSH_FRONT = "push_front";
+    static final String PUSH_BACK = "push_back";
+    static final String POP_FRONT = "pop_front";
+    static final String POP_BACK = "pop_back";
+
+    static final String ERROR_MESSAGE = "error";
+
     public static PrintWriter pw = new PrintWriter(System.out);
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int commands = Integer.parseInt(br.readLine());
         int maxSize = Integer.parseInt(br.readLine());
-        myDeque mdq = new myDeque(maxSize);
+        MyDeque mdq = new MyDeque(maxSize);
         for (int i = 0; i < commands; i++) {
             try {
                 StringTokenizer st = new StringTokenizer(br.readLine());
                 String command = st.nextToken();
                 //свитч по-разному работает в разных Джавах.
-                if ("push_front".equals(command)) {
+                if (PUSH_FRONT.equals(command)) {
                     mdq.pushFront(Integer.parseInt(st.nextToken()));
-                } else if ("push_back".equals(command)) {
+                } else if (PUSH_BACK.equals(command)) {
                     mdq.pushBack(Integer.parseInt(st.nextToken()));
-                } else if ("pop_front".equals(command)) {
+                } else if (POP_FRONT.equals(command)) {
                     pw.println(mdq.popFront());
-                } else if ("pop_back".equals(command)) {
+                } else if (POP_BACK.equals(command)) {
                     pw.println(mdq.popBack());
                 }
             } catch (IllegalStateException | NoSuchElementException ex) {
-                pw.println("error");
+                pw.println(ERROR_MESSAGE);
 //            } catch (NoSuchElementException ex){
 //                pw.println("empty");
             }
@@ -88,16 +96,13 @@ public class Sprint2FinalA {
 
 }
 
-class myDeque {
+class MyDeque {
     public int[] dequeBody;
     public int maxSize;
     public int currSize = 0;
     public int headIndex, tailIndex;
 
-    public myDeque() {
-    }
-
-    public myDeque(int maxSize) {
+    public MyDeque(int maxSize) {
         this.currSize = 0;
         this.maxSize = maxSize;
         this.dequeBody = new int[maxSize];
