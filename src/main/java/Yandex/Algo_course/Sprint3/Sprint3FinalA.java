@@ -24,32 +24,26 @@ public class Sprint3FinalA {
         if (arr[midPos] == k) {
             return midPos;
         } else {
-            if (arr[midPos] > k) { //в классическом поиске, мы искали бы слева
-                if (arr[stop] < arr[midPos]) { //перегиб однозначно справа
-                    if (arr[stop] < k) {
-                        stop = midPos; // искомое однозначно слева
-                    } else {
-                        start = midPos; //искомое - справа
-                    }
-                } else { //перегиб однозначно слева
-                    if (arr[stop] > k) {
-                        stop = midPos; //искомое между лево и центром.
-                    } else {
+            if (arr[stop] < arr[midPos]) { //Перелом справа от опорного
+                if (k > arr[midPos]) { // элемент справа от опорного, до перелома
+                    start = midPos;
+                } else { //элемент слева от опорного, может быть через "0"
+                    //сравним с началом массива
+                    if (k >= arr[start]) { // элемент от 0 до центра.
+                        stop = midPos;
+                    } else {//элемент за нулём, у перелома
                         start = midPos;
                     }
                 }
-            } else {                //в классическом поиске, мы искали бы справа
-                if (arr[stop] < arr[midPos]) { //перегиб однозначно справа
-                    if (arr[start] > k) {
-                        stop = midPos; // искомое однозначно слева
-                    } else {
-                        start = midPos; //искомое - справа
-                    }
-                } else { //перегиб однозначно слева
-                    if (arr[stop] >= k) {
-                        start = midPos; //искомое между центром и право.
-                    } else {
+            } else { //перелом слева от опорного
+                if (k < arr[midPos]) { //элемент где-то от опорного до перелома
+                    stop = midPos;
+                } else { //элемент справа от опорного, может быть через "0"
+                    //сравним с началом массива
+                    if (k > arr[stop]) { // элемент от 0 до центра.
                         stop = midPos;
+                    } else {//элемент за нулём, у перелома
+                        start = midPos;
                     }
                 }
             }
