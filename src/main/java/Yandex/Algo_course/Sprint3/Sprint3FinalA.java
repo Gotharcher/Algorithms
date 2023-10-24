@@ -1,7 +1,7 @@
-package Yandex.Algo_course.Sprint3;
-
 //https://contest.yandex.ru/contest/23815/run-report/93737819/
 //93737819
+
+package Yandex.Algo_course.Sprint3;
 
 /*
 ПРИНЦИП РАБОТЫ
