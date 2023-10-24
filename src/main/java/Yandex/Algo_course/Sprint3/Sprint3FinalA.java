@@ -1,7 +1,7 @@
-package Yandex.Algo_course.Sprint3;
-
 //https://contest.yandex.ru/contest/23815/run-report/93737819/
 //93737819
+
+package Yandex.Algo_course.Sprint3;
 
 /*
 ПРИНЦИП РАБОТЫ
@@ -97,31 +97,6 @@ public class Sprint3FinalA {
     private static void test() {
 //        int[] arr = {19, 21, 100, 101, 1, 4, 5, 7, 12};
 //        System.out.println(brokenSearch(arr, 5));
-//
-//        int[] arrr = {5, 1};
-//        System.out.println(brokenSearch(arrr, 1));
-//
-//        int[] arrrr = {6, 7, 8, 1, 2, 3, 5};
-//        System.out.println(brokenSearch(arrrr, 6));
-//        System.out.println(brokenSearch(arrrr, 7));
-//        System.out.println(brokenSearch(arrrr, 8));
-//        System.out.println(brokenSearch(arrrr, 1));
-//        System.out.println(brokenSearch(arrrr, 2));
-//        System.out.println(brokenSearch(arrrr, 3));
-//        System.out.println(brokenSearch(arrrr, 5));
-//        System.out.println(brokenSearch(arrrr, 4));
-//
-//        int[] ar = {4, 8, 1, 2, 3};
-//        System.out.println(brokenSearch(ar, 3));
-//        System.out.println(brokenSearch(ar, 1));
-//        System.out.println(brokenSearch(ar, 4));
-//        System.out.println(brokenSearch(ar, 8));
-//        System.out.println(brokenSearch(ar, 2));
-//        System.out.println(brokenSearch(ar, 0));
-//        System.out.println(brokenSearch(ar, 5));
-//        System.out.println(brokenSearch(ar, 10));
-
-//        assert 6 == brokenSearch(arr, 5);
     }
 
     public static void main(String[] args) throws IOException {
