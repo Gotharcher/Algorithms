@@ -99,6 +99,7 @@ public class Sprint3FinalA {
 //        System.out.println(brokenSearch(arr, 5));
     }
 
+    //psvm для отладки
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int arrSize = Integer.parseInt(br.readLine());
