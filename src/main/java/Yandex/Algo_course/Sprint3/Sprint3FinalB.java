@@ -1,5 +1,5 @@
-//https://contest.yandex.ru/contest/23815/run-report/94116118/
-//94116118
+//https://contest.yandex.ru/contest/23815/run-report/94362717/
+//94362717
 
 package Yandex.Algo_course.Sprint3;
 
@@ -9,7 +9,7 @@ package Yandex.Algo_course.Sprint3;
 по нашим правилам, любой сортировкой.
 После этого, реализуем быструю сортировку, которая оперирует интервалами, определяемыми индексами начала и конца рассматриваемого подмассива,
 так алгоритм сможет отсортировать массив без выделения дополнительной памяти.
- */
+*/
 
 /*
 ДОКАЗАТЕЛЬСТВО КОРРЕКТНОСТИ
@@ -17,13 +17,14 @@ package Yandex.Algo_course.Sprint3;
 Условия работы компаратора: Сначала идёт сравнение по кол-ву решенных задач (больше - лучше), потом по штрафу (меньше - лучше),
 потом по имени (лексикографически). Первые два условия сравниваются простым вычитанием, третье - встроенным
 String.compareTo (которое является результатом вычитания char).
-Следующим шагом, рассмотрим корректность сортировки. Выбирается опорный элемент (произвольный, в данном случае, первый),
+Следующим шагом, рассмотрим корректность сортировки. Выбирается опорный элемент (произвольный, в данном случае, случайно выберем
+элемент из рассматриваемого подмассива, чтобы не было возможности однозначно создать killer-sequence),
 весь массив проходится с двух сторон, элементы по указателям сравниваются с опорным, если элемент слева больше, а справа меньше,
 элементы меняются местами. В итоге, получается два логических подмассива, разделенные точкой встречи указателей, слева не превосходящие,
 а справа не меньшие опорного элемента.
 Алгоритм рекурсивно вызывается для двух подмассивов, от начала до середины и от середины до конца. Подмассивы определяются
 индексами, дополнительные физические подмассивы не создаются.
- */
+*/
 
 /*
 ВРЕМЕННАЯ СЛОЖНОСТЬ
@@ -42,11 +43,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 public class Sprint3FinalB {
 
     public static PrintWriter pw;
+    public static Random rnd = new Random();
 
     public static void main(String[] args) throws IOException {
         pw = new PrintWriter(System.out);
@@ -66,12 +69,16 @@ public class Sprint3FinalB {
         for (Participant p : participants) {
             pw.println(p);
         }
+
         br.close();
         pw.close();
     }
 
+
     public static <T extends Comparable<T>> void inPlaceQuickSort(T[] arr, int startInput, int stopInput) {
-        T pivot = arr[startInput];
+        //выберем случайный индекс от начала подмассива до конца. Рандом генерирует подотрезок, без баунда.
+        int randomIdx = startInput + rnd.nextInt(stopInput-startInput+1);
+        T pivot = arr[randomIdx];
         int startIdx = startInput;
         int stopIdx = stopInput;
         while (startIdx < stopIdx) {

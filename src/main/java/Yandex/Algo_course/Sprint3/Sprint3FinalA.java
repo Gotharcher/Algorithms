@@ -1,7 +1,7 @@
-package Yandex.Algo_course.Sprint3;
-
 //https://contest.yandex.ru/contest/23815/run-report/93737819/
 //93737819
+
+package Yandex.Algo_course.Sprint3;
 
 /*
 ПРИНЦИП РАБОТЫ
@@ -95,8 +95,8 @@ public class Sprint3FinalA {
     }
 
     private static void test() {
-        int[] arr = {19, 21, 100, 101, 1, 4, 5, 7, 12};
-        System.out.println(brokenSearch(arr, 5));
+//        int[] arr = {19, 21, 100, 101, 1, 4, 5, 7, 12};
+//        System.out.println(brokenSearch(arr, 5));
     }
 
     //psvm для отладки
