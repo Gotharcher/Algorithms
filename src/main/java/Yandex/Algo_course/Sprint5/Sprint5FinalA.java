@@ -12,13 +12,16 @@ import java.io.PrintWriter;
  */
 
 public class Sprint5FinalA {
+
     static PrintWriter pw;
     static int lastIndex = 1;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         pw = new PrintWriter(System.out);
         int partsQty = Integer.parseInt(br.readLine());
-        HeapParticipantElement[] partsHeap = new HeapParticipantElement[2*partsQty+1];
+        HeapParticipantElement[] partsHeap = new HeapParticipantElement[partsQty+1];
+        //Заполним кучу входными данными
         for(int i = 0; i<partsQty;i++){
             String[] ss = br.readLine().split(" ");
             HeapParticipantElement newEle = new HeapParticipantElement(ss);
@@ -26,6 +29,7 @@ public class Sprint5FinalA {
             siftUp(partsHeap, lastIndex);
             lastIndex++;
         }
+        //Высыпем кучу в упорядоченном виде (сразу на вывод)
     }
 
     static int siftUp(HeapParticipantElement[] heap, int idx){
