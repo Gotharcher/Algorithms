@@ -55,6 +55,9 @@ import java.util.Deque;
 import java.util.List;
 
 public class Sprint6FinalB {
+    public static final char WHITE = 'w';
+    public static final char BLACK = 'b';
+    public static final char GREY = 'g';
     static Deque<Integer> graphStack = new ArrayDeque<>();
     static char[] colors; //покрас
     static List<Integer>[] vortexes;
@@ -84,13 +87,13 @@ public class Sprint6FinalB {
         }
 
         for (int i = 1; i < vertQty + 1; i++) {
-            colors[i] = 'w';
+            colors[i] = WHITE;
         }
 
         //И поищем циклы в ДФСе
         for (int i = 1; i < vertQty + 1; i++) {
-            if (colors[i] == 'w') {
-                DFS(i);
+            if (colors[i] == WHITE) {
+                deepFirstSearch(i);
                 if (alarm) {
                     break;
                 }
@@ -106,23 +109,23 @@ public class Sprint6FinalB {
         br.close();
     }
 
-    public static void DFS(int startNode) {
+    public static void deepFirstSearch(int startNode) {
         graphStack.push(startNode);
         while (!graphStack.isEmpty()) {
             int thisNode = graphStack.pop();
-            if (colors[thisNode] == 'b') {
+            if (colors[thisNode] == BLACK) {
                 continue;
             }
-            if (colors[thisNode] == 'w') {
+            if (colors[thisNode] == WHITE) {
                 graphStack.push(thisNode);
-                colors[thisNode] = 'g';
+                colors[thisNode] = GREY;
                 addToStack(thisNode);
                 if (alarm) {
                     return;
                 }
             } else {
-                if (colors[thisNode] == 'g') {
-                    colors[thisNode] = 'b';
+                if (colors[thisNode] == GREY) {
+                    colors[thisNode] = BLACK;
                 }
             }
         }
@@ -131,10 +134,10 @@ public class Sprint6FinalB {
     public static void addToStack(int thisNode) {
         List<Integer> nears = vortexes[thisNode];
         for (int i : nears) {
-            if (colors[i] == 'w') {
+            if (colors[i] == WHITE) {
                 graphStack.push(i);
             }
-            if (colors[i] == 'g') {
+            if (colors[i] == GREY) {
                 alarm = true;
                 return;
             }

@@ -49,6 +49,8 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class Sprint6FinalA {
+    public static final char WHITE = 'w';
+    public static final char GREY = 'g';
     static PriorityQueue<Edge> edgesHeap = new PriorityQueue<>();
     static char[] colors;
     static List<Edge>[] vortexies;
@@ -63,7 +65,7 @@ public class Sprint6FinalA {
 
         colors = new char[v];
         for (int i = 0; i < v; i++) {
-            colors[i] = 'w';
+            colors[i] = WHITE;
         }
 
         vortexies = new List[v];
@@ -86,7 +88,7 @@ public class Sprint6FinalA {
 
         boolean anyWhite = false;
         for (char c : colors) {
-            if (c == 'w') {
+            if (c == WHITE) {
                 anyWhite = true;
                 break;
             }
@@ -104,8 +106,8 @@ public class Sprint6FinalA {
         colors[0] = 'g';
         while (!edgesHeap.isEmpty()) {
             Edge nextEdge = edgesHeap.poll();
-            if (colors[nextEdge.toV - 1] == 'w') {
-                colors[nextEdge.toV - 1] = 'g';
+            if (colors[nextEdge.toV - 1] == WHITE) {
+                colors[nextEdge.toV - 1] = GREY;
                 addToHeap(nextEdge.toV);
                 ans += nextEdge.weight;
             }
@@ -115,7 +117,7 @@ public class Sprint6FinalA {
     public static void addToHeap(int thisNode) {
         List<Edge> nears = vortexies[thisNode - 1];
         for (Edge e : nears) {
-            if (colors[e.toV - 1] == 'w') {
+            if (colors[e.toV - 1] == WHITE) {
                 edgesHeap.add(e);
             }
         }
