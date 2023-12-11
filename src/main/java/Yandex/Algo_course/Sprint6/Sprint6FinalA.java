@@ -1,143 +1,137 @@
-//102439984
-//https://contest.yandex.ru/contest/25070/run-report/102439984/
-
-package Yandex.Algo_course.Sprint6;
+//https://contest.yandex.ru/contest/25070/run-report/102547566/
 
 /*
 ПРИНЦИП РАБОТЫ
-Идея состоит в том, чтобы представить маршруты в виде графа, R будут пути в прямом направлении (R = 1 -> 2), а B - в обратном (B = 2 -> 1)
-Таким образом, если при обходе в глубину мы наткнёмся на цикл, это будет означать, что обратные пути привели нас в тот же город, из которого мы "выехали", что означает неоптимальность карты.
-
-Количество рёбер, по условиям задачи, E = (V*(V-1))/2 => E ~ V^2 для оценки сложности.
+Используем вариант Алгоритма Прима, но будем брать максимальное ребро, а не минимальное. Я еще так посмотрел, это не совсем Прима...
+Это какой-то priorityFS.
+Пояснения к сокращениям: V - число вершин, E - число ребер.
  */
 
 /*
 ДОКАЗАТЕЛЬСТВО КОРРЕКТНОСТИ
-В условии сказано, что можно двигаться только от большего города к меньшему. Значит, граф ориентированный.
-Из каждого города дороги ведут только "вперед, к столице", значит, дороги одного типа не могут сформировать цикл.
+Для хранения следующих вершин шага, используем приоритетную очередь - кучу, в которой будут объекты с полями: куда, вес.
+Классу описан компаратор, чтобы куча корректно сортировалась.
+Начнем алгоритм с того, что добавим в кучу все ребра из произвольной вершины (вершина у нас как минимум одна, выберем первую).
+Следующим шагом, в цикле, пока в куче есть ребра, будем брать из кучи ребро с наибольшим весом. Если оно ведет в ранее посещенную вершину - берем следующее.
+Если ребро ведет в непосещенную вершину - увеличиваем итоговый вес остовного дерева, и добавляем в кучу все рёбра из новой вершины, которые ведут в непосещенные вершины.
+Так мы гарантированно обойдём все вершины.
+Для каждой вершины, чьи рёбра мы вносим в кучу, покрасим её в серый. В черный красить необязательно - после обхода графа, по массиву цветов будет запущен поиск белых вершин.
+Если таковые найдутся, граф несвязный.
 
-Теорема о DFS и циклах:
-В случае обхода в глубину, при добавлении новых вершин в стек, если вершина серая - значит, в данном пути есть цикл.
-Черные вершины (посещенные в предыдущих итерациях DFS), проверять нет необходимости - так как они уже проверены и не имеют в себе цикла, значит, они ведут в другие вершины, отдельные от тех, которые мы проверяем сейчас.
-
-
-Визуализация RB R
-1 --- 2 --- 3
-1 ========= 3
-
-Если представить дорогу типа B как ребро с обратной ориентацией (из столицы на периферию), то в случае обхода в глубину, путь будет 1-2-3=(1),
-вершина 1 будет серой в данной итерации, а значит, по пути типа B мы вернулись в вершину, из которой вышли, когда шли путями R.
-Если определить R как "обратный" путь ничего не поменяется, обход будет 1=3-2-(1), та же серая вершина на том же месте.
-Таким образом, по условию задачи, это будет неоптимальная карта - по R мы прошли в те же города, что и по B. На этом можно завершать все проверки и выводить ответ.
-Если же мы прошли все элементы DFS (все ячейки чёрные), значит цикла нет и карта оптимальная.
+Исходя из этого, мы гарантированно обошли все достижимые вершины ТОЛЬКО по максимальному пути. И можем удостовериться, что у нас нет непосещенных вершин.
  */
 
 /*
 ВРЕМЕННАЯ СЛОЖНОСТЬ
-В худшем по времени случае нам нужно будет пройти все элементы - все рёбра и все вершины, O(V) + O(E), где V и E - вершины и рёбра соответственно.
-Исходя из условия, количество вершин равно N, а количество ребер пропорционально квадрату, получаем O(N) + O(N^2)
-Итоговая сложность: O(N^2)
+Начальное заполнение требует O(E) операций. Финальная проверка на связность графа занимает O(V).
+Добавление и изъятие ребра в/из кучи занимает O(log N), где N - число элем○ентов в куче. Худший вариант - когда в кучу
+добавляется V раз E/V записей ~ O(E*log E). Последующие действия - E извлечений, тоже O(E*log E). Так как добавляются только
+непосещенные вершины, это снижает подходящее число E, для последних добавляемых ребер с O(log E) до O(1), но это константа, на сложность не влияет.
+
+Итоговая сложность O(E * log E)
  */
 
 /*
 ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ
-В данном решении для хранения используется список смежности, изначально занимаемое место О(N^2).
-Вспомогательные структуры хранения данных - стек для ДФС и массив цветов - пропорциональны N.
-Итоговая сложность O(N^2)
+Изначальный список смежности занимает O(V+E).
+Дополнительные структуры - массив цветов, O(V), куча ребер O(E)
+Итоговая сложность O(V+E)
  */
+
+package Yandex.Algo_course.Sprint6;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
+import java.util.PriorityQueue;
 
-public class Sprint6FinalA {
-    static Deque<Integer> graphStack = new ArrayDeque<>();
-    static char[] colors; //покрас
-    static List<Integer>[] vortexes;
-
-    static boolean alarm; //глобальный триггер, что граф зацикленный, чтобы прервать исполнение и сэкономить
+public class Sprint6Final {
+    static PriorityQueue<Edge> edgesHeap = new PriorityQueue<>();
+    static char[] colors;
+    static List<Edge>[] vortexies;
+    static int ans = 0;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int vertQty = Integer.parseInt(br.readLine());
 
-        //Все задачи решал через сдвиг номера вершины, теперь хочу не учитывать нулевой индекс массива, чтобы номер вершины был индексом.
-        vortexes = new List[vertQty + 1];
-        for (int m = 0; m < vertQty + 1; m++) {
-            vortexes[m] = new ArrayList<>();
-        }
-        colors = new char[vertQty + 1];
-        //Представим R как прямые пути, а B - обратные.
-        for (int m = 1; m < vertQty; m++) {
-            char[] links = br.readLine().toCharArray();
-            for (int l = 0; l < links.length; l++) {
-                if (links[l] == 'R') {
-                    vortexes[m].add(m + l + 1);
-                } else {
-                    vortexes[m + l + 1].add(m);
-                }
-            }
-        }
+        String[] inpSS = br.readLine().split(" ");
+        int v = Integer.parseInt(inpSS[0]);
+        int e = Integer.parseInt(inpSS[1]);
 
-        for (int i = 1; i < vertQty + 1; i++) {
+        colors = new char[v];
+        for (int i = 0; i < v; i++) {
             colors[i] = 'w';
         }
 
-        //И поищем циклы в ДФСе
-        for (int i = 1; i < vertQty + 1; i++) {
-            if (colors[i] == 'w') {
-                DFS(i);
-                if (alarm) {
-                    break;
-                }
+        vortexies = new List[v];
+        for (int m = 0; m < v; m++) {
+            vortexies[m] = new ArrayList<>();
+        }
+
+        for (int m = 0; m < e; m++) {
+            String[] ss = br.readLine().split(" ");
+            int inp = Integer.parseInt(ss[0]);
+            int outp = Integer.parseInt(ss[1]);
+            int weight = Integer.parseInt(ss[2]);
+            Edge eFwd = new Edge(outp, weight);
+            Edge eRev = new Edge(inp, weight);
+            vortexies[inp - 1].add(eFwd);
+            vortexies[outp - 1].add(eRev);
+        }
+
+        strangeSearch(1);
+
+        boolean anyWhite = false;
+        for (char c : colors) {
+            if (c == 'w') {
+                anyWhite = true;
+                break;
             }
         }
-
-        if (alarm) {
-            System.out.println("NO");
+        if (anyWhite) {
+            System.out.println("Oops! I did it again");
         } else {
-            System.out.println("YES");
+            System.out.println(ans);
         }
-
         br.close();
     }
 
-    public static void DFS(int startNode) {
-        graphStack.push(startNode);
-        while (!graphStack.isEmpty()) {
-            int thisNode = graphStack.pop();
-            if (colors[thisNode] == 'b') {
-                continue;
-            }
-            if (colors[thisNode] == 'w') {
-                graphStack.push(thisNode);
-                colors[thisNode] = 'g';
-                addToStack(thisNode);
-                if (alarm) {
-                    return;
-                }
-            } else {
-                if (colors[thisNode] == 'g') {
-                    colors[thisNode] = 'b';
-                }
+    public static void strangeSearch(int startNode) {
+        addToHeap(1);
+        colors[0] = 'g';
+        while (!edgesHeap.isEmpty()) {
+            Edge nextEdge = edgesHeap.poll();
+            if (colors[nextEdge.toV - 1] == 'w') {
+                colors[nextEdge.toV - 1] = 'g';
+                addToHeap(nextEdge.toV);
+                ans += nextEdge.weight;
             }
         }
     }
 
-    public static void addToStack(int thisNode) {
-        List<Integer> nears = vortexes[thisNode];
-        for (int i : nears) {
-            if (colors[i] == 'w') {
-                graphStack.push(i);
-            }
-            if (colors[i] == 'g') {
-                alarm = true;
-                return;
+    public static void addToHeap(int thisNode) {
+        List<Edge> nears = vortexies[thisNode - 1];
+        for (Edge e : nears) {
+            if (colors[e.toV - 1] == 'w') {
+                edgesHeap.add(e);
             }
         }
+    }
+}
+
+//Компарэбл класс для Кучи
+class Edge implements Comparable<Edge> {
+    public int toV, weight;
+
+    public Edge(int toV, int weight) {
+        this.toV = toV;
+        this.weight = weight;
+    }
+
+    @Override
+    public int compareTo(Edge o) {
+        return o.weight - this.weight;
     }
 }
