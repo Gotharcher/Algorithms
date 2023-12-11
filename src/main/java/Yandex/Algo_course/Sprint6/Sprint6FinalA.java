@@ -1,4 +1,5 @@
 //https://contest.yandex.ru/contest/25070/run-report/102547566/
+//102547566
 
 /*
 ПРИНЦИП РАБОТЫ
@@ -24,7 +25,7 @@
 /*
 ВРЕМЕННАЯ СЛОЖНОСТЬ
 Начальное заполнение требует O(E) операций. Финальная проверка на связность графа занимает O(V).
-Добавление и изъятие ребра в/из кучи занимает O(log N), где N - число элем○ентов в куче. Худший вариант - когда в кучу
+Добавление и изъятие ребра в/из кучи занимает O(log N), где N - число элементов в куче. Худший вариант - когда в кучу
 добавляется V раз E/V записей ~ O(E*log E). Последующие действия - E извлечений, тоже O(E*log E). Так как добавляются только
 непосещенные вершины, это снижает подходящее число E, для последних добавляемых ребер с O(log E) до O(1), но это константа, на сложность не влияет.
 
@@ -47,7 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class Sprint6Final {
+public class Sprint6FinalA {
     static PriorityQueue<Edge> edgesHeap = new PriorityQueue<>();
     static char[] colors;
     static List<Edge>[] vortexies;
@@ -99,7 +100,7 @@ public class Sprint6Final {
     }
 
     public static void strangeSearch(int startNode) {
-        addToHeap(1);
+        addToHeap(startNode);
         colors[0] = 'g';
         while (!edgesHeap.isEmpty()) {
             Edge nextEdge = edgesHeap.poll();
