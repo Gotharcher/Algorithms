@@ -56,8 +56,11 @@ public class Sprint6D {
         graphStack.push(startNode);
         while (!graphStack.isEmpty()) {
             int thisNode = graphStack.poll();
+            if(colors[thisNode-1] == 'b'){
+                continue;
+            }
             if (colors[thisNode - 1] == 'w') {
-                graphStack.push(thisNode);
+                graphStack.addLast(thisNode);
                 colors[thisNode - 1] = 'g';
                 pw.print(thisNode);
                 pw.print(" ");
@@ -76,7 +79,7 @@ public class Sprint6D {
 
         for (int i : nears) {
             if (colors[i - 1] == 'w') {
-                graphStack.push(i);
+                graphStack.addLast(i);
             }
         }
     }
